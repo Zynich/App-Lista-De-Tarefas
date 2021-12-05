@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Formulário de Cadastro</title>
+
+	<!--Estilo customizado -->
+	<link rel="stylesheet" type="text/css" href="estilo.css">
+</head>
+<body>
+	<h2>Cadastro de usuário</h2>
+
+	<form>
+		
+		<fieldset>
+			<legend>Detalhes de Contato</legend>
+
+			<div>
+				<label for="nome">Nome:</label>
+				<input type="text" name="nome" id="nome">
+			</div>
+
+			<div>
+				<label for="email">Email:</label>
+				<input type="text" name="email" id="email">
+			</div>
+
+		</fieldset>
+
+
+		<fieldset>
+			<legend>Definir senha</legend>
+
+			<div>
+				<label for="mensagem">Nova senha:</label>
+				<div>
+					<input class="senha" type="password" name="senha" id="senha" placeholder="Digite sua senha" >
+				</div>
+
+				<label for="mensagem">Repetir senha:</label>
+				<div>
+					<input class="senha" type="password" name="senha" id="senha" placeholder="Digite sua senha" >
+				</div>
+			</div>
+
+		</fieldset>
+
+		
+			<div>
+				<input class="cadastrar" type="submit" value="Cadastrar">
+			</div>
+
+
+	</form>
+	
+</body>
+</html>
