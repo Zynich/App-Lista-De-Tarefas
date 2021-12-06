@@ -1,0 +1,74 @@
+.cabecalho 
+{
+	border:1px solid purple;
+	border-bottom :10 px;
+	position: fixed;
+	width:85%;
+	right:0;
+	top:0;
+	
+}
+#excluir
+{	
+	border: 1px solid black;
+	width:100%;
+	margin-bottom:5px;
+}
+#novo
+{
+	width:100%;
+	border: 1px solid black;
+	margin-bottom:5px;	
+}
+#criare
+{
+	width:100%;
+	border: 1px solid black;
+	margin-bottom:5px;	
+}
+.esquerdo
+{
+	width: 15%; 
+	height: 100%; 
+	left: 0;
+	top: 0;
+	background-color:;
+	position:fixed;
+}
+
+#tabela
+{
+	margin-left:16%;
+	border: 3px solid gray;
+	width:500px;
+	height:500px;
+	background-color:white;
+
+}
+#centro 
+{
+	border: 1px solid black;
+	width:500px;
+	height:100px;
+}
+
+tr 
+{
+	margin-bottom:5px;
+	
+}
+#salvar
+{
+	margin-left:23.5%;
+}
+#opclassificar
+{
+	margin-left:16%;
+}
+
+body
+{
+	background-color:purple;
+}
+
+
