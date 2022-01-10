@@ -1,14 +1,24 @@
-# App Web Lista de tarefa
+# todo-list-app
 
-Este site está sendo desenvolvido como um projeto da cadeira de Laboratório de Desenvolvimento de Software. Vamos desenvolver o website utilizando as ferramentas básicas e avançadas do desenvolvmento web. Utilizando das ferramentas descritas abaixo para desenvolver a aplicação.
+## Project setup
+```
+npm install
+```
 
-## Quais ferramentas serão utilizados no desenvolvimento web?
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
 
- - Bootstrap
- - Normalize
- - Sublime Editor
- - Git
- - XAMPP
- - MYSQL
+### Compiles and minifies for production
+```
+npm run build
+```
 
+### Lints and fixes files
+```
+npm run lint
+```
 
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
