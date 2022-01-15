@@ -4,7 +4,7 @@
     <b-container fluid="lg" class="mt-2" size="lg" Max container width="lg">
       <b-row>
         <b-col class="mt-3">
-          <AddModalTask class="p-1" @addTarefa="enviarItem"></AddModalTask>
+          <AddModalTask title="Adicionar tarefa" class="p-1" @addTarefa="enviarItem"></AddModalTask>
         </b-col>
 
         <b-col cols="12" md="8"> </b-col>
@@ -14,6 +14,7 @@
             aria-pressed="false"
             variant="danger"
             size="sm"
+            title="Excluir todas as tarefas" 
             replace
             @click="deleteAll"
           >
@@ -75,7 +76,7 @@ export default {
           descricao: "Texto salvo",
           valueData: "20/12/2020",
           dificuldade: "Médio",
-          checkBox: "Pendente",
+          status: "Pendente",
         },
         {
           key: 2,
@@ -83,7 +84,7 @@ export default {
           descricao: "Texto salvo 2",
           valueData: "20/12/2020",
           dificuldade: "Médio",
-          checkBox: "Concluído",
+          status: "Concluído",
         },
         {
           key: 3,
@@ -91,7 +92,7 @@ export default {
           descricao: "Texto salvo 2",
           valueData: "20/12/2020",
           dificuldade: "Médio",
-          checkBox: "Pendente",
+          status: "Pendente",
         },
         {
           key: 4,
@@ -99,7 +100,7 @@ export default {
           descricao: "Texto salvo 2",
           valueData: "20/12/2020",
           dificuldade: "Médio",
-          checkBox: "Concluído",
+          status: "Concluído",
         },
       ],
       op: "",
@@ -111,7 +112,7 @@ export default {
     enviarItem(item) {
       this.tarefas.push({
         key: Date.now(),
-        checkBox: item.checkBox,
+        status: item.status,
         titulo: item.titulo,
         descricao: item.descricao,
         valueData: item.valueData,
@@ -135,10 +136,10 @@ export default {
         return item.key === key;
       });
 
-      if (filtro.key === lista.key && filtro.checkBox === "Concluído") {
-        lista.checkBox = "Pendente";
+      if (filtro.key === lista.key && filtro.status === "Concluído") {
+        lista.status = "Pendente";
       } else {
-        lista.checkBox = "Concluído";
+        lista.status = "Concluído";
       }
     },
 

@@ -2,12 +2,16 @@
   <section>
 
 <div>
-      <b-input-group size="sm" class="mt-3" prepend="Pesquisar">
+      <b-input-group size="sm" class="mt-3">
+         <b-input-group-prepend is-text>
+        <b-icon  scale="1" icon="search"></b-icon>
+      </b-input-group-prepend>
           <b-form-input 
                   autofocus 
                   v-model="filter"
-                  placeholder="Search"
+                  placeholder="Pesquisar"
                   type="text" 
+                  title="Pesquisar"
                   size="sm"></b-form-input>
         </b-input-group>
   
@@ -25,7 +29,17 @@
         hover
       >
         <template v-slot:cell(check)="{ item }">
-          <b-form-checkbox v-if="item.checkBox === 'Pendente' ? true:false" @change="completed(item.key)"></b-form-checkbox>
+          <b-form-checkbox 
+                      size="sm" 
+                      button
+                      button-variant="none"
+                      name="Concluir" 
+                      title="Concluir" 
+                      v-if="item.status === 'Pendente' ? true:false" 
+                      @change="completed(item.key)"
+          >
+                     <b-icon aria-hidden="true" title="Concluir" icon="check-square" scale="1.5em" variant="dark"></b-icon>
+          </b-form-checkbox>
         </template>
 
         <template v-slot:cell(editar)="{ item }">
@@ -33,14 +47,17 @@
             v-b-modal.EditModalTask
             variant="dark"
             size="sm"
+            title="Editar"
             @click="editar(item.key)"
-            v-if="item.checkBox == 'Pendente' ? true : false"
-            >Editar</b-button
+            v-if="item.status == 'Pendente' ? true : false"
+            >Editar           
+          </b-button
           >
             <b-button
-            v-if="item.checkBox == 'Pendente' ? false : true"
+            v-if="item.status == 'Pendente' ? false : true"
             v-b-modal.EditModalTask
             variant="dark"
+            title="Editar"
             size="sm"
             @click="editar(item.key)"
             disabled
@@ -49,7 +66,7 @@
         </template>
 
         <template v-slot:cell(excluir)="{ item }">
-          <b-button variant="danger" size="sm" @click="excluir(item.key)"
+          <b-button title="Excluir" variant="danger" size="sm" @click="excluir(item.key)"
             >Excluir
           </b-button>
         </template>
@@ -101,7 +118,7 @@ export default {
       fields: [
         {
           key: "check",
-          label: "",
+          label: "",  
           thStyle: { backgroundColor: "#000", color: "#FFF" },
         },
         {
@@ -125,7 +142,7 @@ export default {
           thStyle: { backgroundColor: "#000", color: "#FFF" },
         },
         {
-          key: "checkBox",
+          key: "status",
           label: "Status",
           thStyle: { backgroundColor: "#000", color: "#FFF" },
         },
@@ -167,12 +184,16 @@ export default {
     },
     rowClass(item, type) {
       if (!item || type !== "row") return;
-      if (item.checkBox === "Concluído") return "table-success";
+      if (item.status === "Concluído") return "table-success";
     },
   },
 };
 </script>
 
 <style>
-</style>
+[type="checkbox"]{
+  width: 0;
+  height: 0;
+}
+</style>>
 
