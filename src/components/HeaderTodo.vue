@@ -1,12 +1,21 @@
 <template>
   <section class="section">
     <b-container fluid class="p-4 bg-dark text-light">
-       <b-col md="4">
-      <h2 class="title" title="App Lista de Tarefas" >{{ title }}</h2>  <!-- Título cabeçalho -->   
-        <b-row class="" cols="8" lg="6">
-       
+        
+         <b-row align-h="between">
+            <b-col cols="12" md="8">
+                <h2 class="title" title="App Lista de Tarefas" >
+                    <router-link to="/">{{ title }}</router-link>
+                </h2>  <!-- Título cabeçalho -->  
+            </b-col>
+
+            <b-col cols="6" md="4">
+                <h2 class="dashboard" dashboard="App Lista de Tarefas" >
+                <router-link tag="button" to="/dashboard" justify-content="right">{{ dashboard }}</router-link>
+            </h2>  <!-- Dashboard -->  
+            </b-col>
         </b-row>
-        </b-col>
+       
     </b-container>  
  </section>
 </template>
@@ -19,12 +28,26 @@ export default ({
         title:{
             type: String,
             default: "APP Lista de Tarefas"
-        }
+        },
+        dashboard:{
+            type: String,
+            default: "Dashboard"
+        },
+
     }
 })
 </script>
 
 <style scoped>
 
+a{
+    text-decoration: none!important;
+}
+button{
+    outline: none!important;
+    background: transparent!important;
+    color: #0d6efd;
+    border: 0;
+}
 
 </style>

@@ -59,7 +59,7 @@
 <script>
 import AddModalTask from "@/components/AddModalTask.vue";
 import ItemList from "@/components/ItemList.vue";
-
+import firebase from '../services/firebaseConnection';
 export default {
   name: "Task",
   components: {
@@ -69,97 +69,89 @@ export default {
   data() {
     return {
       tarefas: [],
-      listaInicial: [
-        {
-          key: 1,
-          titulo: "Texto salvo",
-          descricao: "Texto salvo",
-          valueData: "20/12/2020",
-          dificuldade: "Médio",
-          status: "Pendente",
-        },
-        {
-          key: 2,
-          titulo: "Texto salvo 2",
-          descricao: "Texto salvo 2",
-          valueData: "20/12/2020",
-          dificuldade: "Médio",
-          status: "Concluído",
-        },
-        {
-          key: 3,
-          titulo: "Texto salvo 2",
-          descricao: "Texto salvo 2",
-          valueData: "20/12/2020",
-          dificuldade: "Médio",
-          status: "Pendente",
-        },
-        {
-          key: 4,
-          titulo: "Texto salvo 2",
-          descricao: "Texto salvo 2",
-          valueData: "20/12/2020",
-          dificuldade: "Médio",
-          status: "Concluído",
-        },
-      ],
       op: "",
       keyTemp: null,
+      user: {},
     };
   },
   methods: {
     // Adiciona os itens na tabela recebendo o item do AddModaltask como parâmetro
-    enviarItem(item) {
-      this.tarefas.push({
-        key: Date.now(),
+  async  enviarItem(item) {
+      
+      await firebase.firestore().collection('tasks')
+      .add({
+        userId: this.user.uid,
         status: item.status,
         titulo: item.titulo,
         descricao: item.descricao,
-        valueData: item.valueData,
+        data: item.valueData,
         dificuldade: item.dificuldade,
-      });
-      console.log(this.tarefas);
-    },
-    // remove o item selecionado da tabela
-    deleteTask(key) {
-      let filtro = this.tarefas.filter((item) => {
-        return item.key !== key;
-      });
+      })
+      .then(()=>{
+        console.log('TAREFA ADICIONADA COM SUCESSO');
+      })
+      .catch((error)=>{
+        console.log('ERRO AO ADICIONAR TAREFA' + error);
+      })
 
-      return (this.tarefas = filtro);
+
+    
     },
+   
+
     // verifica se existe na tabela, se existir o status da tarefa é alterado.
-    checkTask(key) {
-      let lista = this.tarefas.find((tarefa) => tarefa.key === key);
+  async  checkTask(key) {
 
-      let filtro = this.tarefas.find((item) => {
-        return item.key === key;
-      });
+      await firebase.firestore().collection('tasks')
+      .doc(key).update({
+        status: 'Concluído'
+      })
 
-      if (filtro.key === lista.key && filtro.status === "Concluído") {
-        lista.status = "Pendente";
-      } else {
-        lista.status = "Concluído";
-      }
+
     },
 
     // Recebe a key e busca no array para editar
     takeKey(key) {
       this.keyTemp = key;
     },
-    editTask(item) {
-      let lista = this.tarefas.find((tarefa) => tarefa.key === this.keyTemp);
+   async editTask(item) {
+      //console.log(this.keyTemp) id da tarefa
+      console.log(item, 'testetetete')// array dos dados editados
 
-      if (lista.key) {
-        lista.titulo = item.titulo;
-        lista.descricao = item.descricao;
-        lista.valueData = item.valueData;
-        lista.dificuldade = item.dificuldade;
-      }
+    // Editar tarefa
+    await firebase.firestore().collection('tasks')
+      .doc(this.keyTemp).update({
+        titulo: item.titulo,
+        descricao: item.descricao,
+        data: item.valueData,
+        dificuldade: item.dificuldade,
+      })
+
     },
     // Exclui todas as tarefas
-    handleOk() {
-      this.tarefas = [];
+  async  handleOk() {
+      
+      const doc = await firebase.firestore().collection('tasks')
+      .where('userId', '==', this.user.uid).get();
+
+      doc.forEach(element => {
+      element.ref.delete();
+      console.log(`deleted: ${element.id}`);
+      });
+
+    },
+     // remove o item selecionado da tabela
+   async deleteTask(key) {
+      const doc = await firebase.firestore().collection('tasks')
+      .doc(key)
+
+      console.log(doc)
+
+
+      doc.delete();
+
+
+
     },
     deleteAll() {
       this.$refs.excluirAll.show();
@@ -176,16 +168,31 @@ export default {
       },
     },
   },
-  created() {
-    // Chama automaticamente após a instância do vue ser chamada e salva no loca storage
-    const lista = localStorage.getItem("tarefas");
-    this.tarefas = JSON.parse(lista) || [];
+  async created() {
+    
+    const user = localStorage.getItem('appTarefas');
+    this.user = JSON.parse(user);
 
-    if (localStorage.getItem("tarefas")) {
-      this.tarefas = JSON.parse(localStorage.getItem("tarefas"));
-    } else {
-      this.tarefas = this.listaInicial;
-    }
+    await firebase.firestore().collection('tasks')
+    .where('userId', '==', this.user.uid)
+    .onSnapshot((snapshot)=>{
+       this.tarefas = []; 
+
+       snapshot.forEach((doc)=>{
+          this.tarefas.push({
+          id: doc.id,
+          titulo: doc.data().titulo,
+          descricao: doc.data().descricao,
+          valueData: doc.data().data,
+          dificuldade: doc.data().dificuldade,
+          status: doc.data().status,
+          });
+       })
+    })
+    
+      
+
+
   },
 };
 </script>

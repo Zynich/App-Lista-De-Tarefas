@@ -1,20 +1,21 @@
 <template>
   <div id="app">
     <HeaderTodo />
-    <Task />
+    <router-view/>
   </div>
 </template>
 
 <script>
 import HeaderTodo from "@/components/HeaderTodo.vue";
-import Task from "@/components/Task.vue";
 
+//import firebase from './services/firebaseConnection';
 export default {
   name: "App",
   components: {
     HeaderTodo,
-    Task,
-  },
+
+  }
+  
 };
 </script>
 

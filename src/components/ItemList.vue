@@ -20,7 +20,7 @@
         striped
         :fields="fields"
         :items="lista"
-        :key="lista.key"
+        :key="lista.id"
         :filter="filter"
         class="p-1"
         id="colorTable"
@@ -36,7 +36,7 @@
                       name="Concluir" 
                       title="Concluir" 
                       v-if="item.status === 'Pendente' ? true:false" 
-                      @change="completed(item.key)"
+                      @change="completed(item.id)"
           >
                      <b-icon aria-hidden="true" title="Concluir" icon="check-square" scale="1.5em" variant="dark"></b-icon>
           </b-form-checkbox>
@@ -48,7 +48,7 @@
             variant="dark"
             size="sm"
             title="Editar"
-            @click="editar(item.key)"
+            @click="editar(item.id)"
             v-if="item.status == 'Pendente' ? true : false"
             >Editar           
           </b-button
@@ -59,14 +59,14 @@
             variant="dark"
             title="Editar"
             size="sm"
-            @click="editar(item.key)"
+            @click="editar(item.id)"
             disabled
             >Editar</b-button
           >
         </template>
 
         <template v-slot:cell(excluir)="{ item }">
-          <b-button title="Excluir" variant="danger" size="sm" @click="excluir(item.key)"
+          <b-button title="Excluir" variant="danger" size="sm" @click="excluir(item.id)"
             >Excluir
           </b-button>
         </template>
@@ -113,8 +113,8 @@ export default {
       itemKey: "",
       itemStatus: "",
       modal: false,
-      tarefa: [],
       filter: "",
+      user:{},
       fields: [
         {
           key: "check",
@@ -174,6 +174,7 @@ export default {
       this.editarTarefa(item);
     },
     editar(item) {
+
       this.modal = true;
       this.itemKey = item;
       this.editarKey(this.itemKey);
@@ -187,6 +188,13 @@ export default {
       if (item.status === "Concluído") return "table-success";
     },
   },
+  created(){
+    const user = localStorage.getItem('appTarefas');
+    this.user = JSON.parse(user);
+
+    //console.log(this.lista)
+
+  }
 };
 </script>
 

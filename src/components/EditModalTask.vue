@@ -22,14 +22,13 @@
 
         <!-- inicio container form -->
         <b-container>
-          <form ref="form" @submit.prevent="salvarTarefa" :state="campoValido">
+          <form ref="form" @submit.prevent="salvarTarefa">
             <!-- inicio formulario titulo -->
             <b-form-group
               label="Título:"
               label-for="titulo-input"
               label-cols-sm="3"
               label-align-sm="left"
-              :state="campoValido"
             >
               <ValidationProvider
                 name="Titulo"
@@ -171,14 +170,13 @@ export default {
     };
   },
   created() {
-    //this.titulo = this.lista.titulo;
-
-    let inputText = this.lista.find((tarefa) => tarefa.key === this.itemKey);
+    
+    let inputText = this.lista.find((tarefa) => tarefa.id === this.itemKey);
 
     this.titulo = inputText.titulo;
     this.descricao = inputText.descricao;
     this.valueData = inputText.valueData.split("/").reverse().join("-");
-    this.dificuldade = inputText.dificuldade;
+    this.dificuldade = inputText.dificuldade; 
   },
 
   methods: {
